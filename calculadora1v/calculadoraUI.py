@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import messagebox
 import math
 # Lógica de la calculadora
-
 historial = []
 
 def agregar_a_historial(operacion):
@@ -16,7 +15,6 @@ def mostrar_historial():
         messagebox.showinfo("Historial", texto)
 
 # UI de la calculadora
-
 ventana = tk.Tk()
 ventana.title("Calculadora Básica")
 ventana.geometry("289x483")
@@ -64,29 +62,27 @@ def calcular_raiz():
 def calcular_porcentaje():
     try:
         partes = entrada.get().split("%")
-        if len(partes) == 2:
-            num = float(partes[0])
-            porc = float(partes[1])
-            resultado = (num * porc) / 100
+        if len(partes) == 2 and partes[0] and partes[1]:
+            porc = float(partes[0])
+            num = float(partes[1])
+            resultado = (porc * num) / 100
             entrada.delete(0, tk.END)
             entrada.insert(0, str(resultado))
             agregar_a_historial(f"{porc}% de {num} = {resultado}")
         else:
             entrada.delete(0, tk.END)
             entrada.insert(0, "Error")
-    except:
+    except Exception:
         entrada.delete(0, tk.END)
         entrada.insert(0, "Error")
 
 # Estilos de botones
-
 estilo_num = {"bg": "#ffffff", "fg": "#2c3e50", "font": ("Arial", 16), "width": 5, "height": 2, "relief": "flat"}
 estilo_op = {"bg": "#3498db", "fg": "white", "font": ("Arial", 16), "width": 5, "height": 2, "relief": "flat"}
 estilo_func = {"bg": "#2ecc71", "fg": "white", "font": ("Arial", 16), "width": 5, "height": 2, "relief": "flat"}
-estilo_hist = {"bg": "#e67e22", "fg": "white", "font": ("Arial", 16), "width": 22, "height": 2, "relief": "flat"}
+estilo_hist = {"bg": "#e67e22", "fg": "white", "font": ("Arial", 16), "width": 23, "height": 2, "relief": "flat"}
 
 # Botones numéricos y operadores
-
 botones = [
     ("7", 1, 0, estilo_num), ("8", 1, 1, estilo_num), ("9", 1, 2, estilo_num), ("/", 1, 3, estilo_op),
     ("4", 2, 0, estilo_num), ("5", 2, 1, estilo_num), ("6", 2, 2, estilo_num), ("*", 2, 3, estilo_op),
@@ -106,5 +102,4 @@ tk.Button(ventana, text="%", **estilo_func, command=calcular_porcentaje).grid(ro
 
 # Botón historial
 tk.Button(ventana, text="📜 Ver historial", **estilo_hist, command=mostrar_historial).grid(row=6, column=0, columnspan=4, padx=2, pady=2)  # Menos separación
-
 ventana.mainloop()
